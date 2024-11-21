@@ -76,7 +76,7 @@ int getCursorPosition(int *rows, int *cols) {
     i++;
   }
   buf[i] = '\0';
-  
+
   if (buf[0] != '\x1b' || buf[1] != '[')
     return -1;
   if (sscanf(&buf[2], "%d;%d", rows, cols) != 2)
@@ -105,7 +105,9 @@ int getWindowSize(int *rows, int *cols) {
 void editorDrawRows() {
   int y;
   for (y = 0; y < E.screenrows; y++) {
-    write(STDOUT_FILENO, "~\r\n", 3);
+    write(STDOUT_FILENO, "~", 1);
+    if (y < E.screenrows - 1)
+      write(STDOUT_FILENO, "\r\n", 2);
   }
 }
 
